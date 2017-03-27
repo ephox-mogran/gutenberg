@@ -129,6 +129,7 @@ Registers a new block provided a unique slug and an object defining its behavior
 - `save( attributes: Object ): WPElement` - Returns an element describing the markup of a block to be saved in the published content. This function is called before save and when switching to an editor's HTML view.
 - `controls: string[]` - Slugs for controls to be made available to block. See also: [`wp.blocks.registerControl`](#wpblocksregistercontrol-slug-string-settings-object-)
 - `encodeAttributes( attributes: Object ): Object` - Called when save markup is generated, this function allows you to control which attributes are to be encoded in the block comment metadata. By default, all attribute values not defined in the block's `attributes` property are serialized to the comment metadata. If defined, this function should return the subset of attributes to encode, or `null` to bypass default behavior.
+- `isVisible: boolean` - Whether the block is to be made available as an option in the block inserter overlay. Defaults to `true`.
 
 ### `wp.blocks.registerControl( slug: string, settings: Object )`
 

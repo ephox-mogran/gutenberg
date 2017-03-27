@@ -1,6 +1,8 @@
 const { html } = wp.blocks.query;
 
 wp.blocks.registerBlock( 'wp/generic', {
+	isVisible: false,
+
 	attributes: {
 		html: html()
 	},

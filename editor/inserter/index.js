@@ -1,5 +1,5 @@
 const Inserter = () => {
-	const blocks = wp.blocks.getBlocks();
+	const blocks = wp.blocks.getVisibleBlocks();
 
 	return (
 		<div className="inserter">

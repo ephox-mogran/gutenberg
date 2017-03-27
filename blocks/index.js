@@ -111,3 +111,12 @@ export function getBlockAttributes( blockNode, blockSettings ) {
 export function getBlocks() {
 	return Object.values( blocks );
 }
+
+/**
+ * Returns all public registered blocks.
+ *
+ * @return {Array} Block settings
+ */
+export function getVisibleBlocks() {
+	return getBlocks().filter( ( block ) => false !== block.isVisible );
+}

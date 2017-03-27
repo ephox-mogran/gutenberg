@@ -176,4 +176,21 @@ describe( 'blocks', () => {
 			] );
 		} );
 	} );
+
+	describe( 'getVisibleBlocks()', () => {
+		it( 'should return an empty array at first', () => {
+			expect( blocks.getVisibleBlocks() ).to.eql( [] );
+		} );
+
+		it( 'should return all registered public blocks', () => {
+			blocks.registerBlock( 'core/visible-block', { isVisible: true } );
+			blocks.registerBlock( 'core/inferred-visible-block' );
+			blocks.registerBlock( 'core/non-visible-block', { isVisible: false } );
+
+			expect( blocks.getVisibleBlocks().map( ( block ) => block.slug ) ).eql( [
+				'core/visible-block',
+				'core/inferred-visible-block'
+			] );
+		} );
+	} );
 } );
