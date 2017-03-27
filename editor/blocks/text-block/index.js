@@ -9,7 +9,7 @@ wp.blocks.registerBlock( 'wp/text', {
 		value: query( 'p', html() )
 	},
 
-	edit( attributes, onChange ) {
+	edit( { attributes, onChange } ) {
 		return (
 			<Editable
 				value={ attributes.value }
@@ -18,7 +18,7 @@ wp.blocks.registerBlock( 'wp/text', {
 		);
 	},
 
-	save( attributes ) {
+	save( { attributes } ) {
 		return <p>{ attributes.value }</p>;
 	}
 } );
