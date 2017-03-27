@@ -12,6 +12,8 @@ import sinon from 'sinon';
 import * as blocks from '../';
 
 describe( 'blocks', () => {
+	const { text } = blocks.query;
+
 	// Reset block state before each test.
 	beforeEach( () => {
 		blocks.getBlocks().forEach( block => {
@@ -101,6 +103,61 @@ describe( 'blocks', () => {
 				slug: 'core/test-block-with-settings',
 				settingName: 'settingValue',
 			} );
+		} );
+	} );
+
+	describe( 'getBlockAttributes()', () => {
+		it( 'should merge attributes from function implementation', () => {
+			const blockSettings = {
+				attributes: function( rawContent ) {
+					return {
+						content: rawContent + ' & Chicken'
+					};
+				}
+			};
+
+			const blockNode = {
+				blockType: 'core/test-block',
+				attrs: {
+					align: 'left'
+				},
+				rawContent: 'Ribs'
+			};
+
+			expect( blocks.getBlockAttributes( blockNode, blockSettings ) ).to.eql( {
+				align: 'left',
+				content: 'Ribs & Chicken'
+			} );
+		} );
+
+		it( 'should merge attributes from query object implementation', () => {
+			const blockSettings = {
+				attributes: {
+					emphasis: text( 'strong' )
+				}
+			};
+
+			const blockNode = {
+				blockType: 'core/test-block',
+				attrs: {},
+				rawContent: '<span>Ribs <strong>& Chicken</strong></span>'
+			};
+
+			expect( blocks.getBlockAttributes( blockNode, blockSettings ) ).to.eql( {
+				emphasis: '& Chicken'
+			} );
+		} );
+	} );
+
+	describe( 'parse()', () => {
+		it( 'should parse the post content properly', () => {
+			const postContent = '<!-- wp:core/test-block -->Ribs<!-- /wp:core/test-block -->';
+
+			expect( blocks.parse( postContent ) ).to.eql( [ {
+				blockType: 'core/test-block',
+				attrs: {},
+				rawContent: 'Ribs'
+			} ] );
 		} );
 	} );
 

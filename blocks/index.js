@@ -7,7 +7,7 @@ import * as query from 'hpq';
 
 export { query };
 export { default as Editable } from './components/editable';
-export { default as parse } from './parser';
+export { parse } from './post.pegjs';
 
 /**
  * Block settings keyed by block slug.
@@ -77,6 +77,30 @@ export function unregisterBlock( slug ) {
  */
 export function getBlockSettings( slug ) {
 	return blocks[ slug ];
+}
+
+/**
+ * Returns the block attributes of a registered block node given its settings.
+ *
+ * @param  {Object} blockNode     Parsed block node
+ * @param  {Object} blockSettings Block settings
+ * @return {Object}               Block state, or undefined if type unknown
+ */
+export function getBlockAttributes( blockNode, blockSettings ) {
+	const { rawContent } = blockNode;
+
+	// Merge attributes from parse with block implementation
+	let { attrs } = blockNode;
+
+	// Block attributes by function
+	if ( 'function' === typeof blockSettings.attributes ) {
+		return { ...attrs, ...blockSettings.attributes( rawContent ) };
+	}
+
+	// Block attributes by hpq
+	if ( blockSettings.attributes ) {
+		return { ...attrs, ...query.parse( rawContent, blockSettings.attributes ) };
+	}
 }
 
 /**

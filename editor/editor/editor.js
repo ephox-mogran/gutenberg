@@ -10,13 +10,17 @@ const Editor = ( { state: { blocks, inserter }, toggleInserter } ) => {
 				{ blocks.map( ( block, index ) => {
 					let settings = wp.blocks.getBlockSettings( block.blockType );
 					if ( ! settings ) {
+						settings = wp.blocks.getBlockSettings( 'wp/generic' );
+					}
+
+					if ( ! settings ) {
 						return;
 					}
 
 					return (
 						<settings.edit
 							key={ index }
-							attributes={ block.attributes }
+							attributes={ wp.blocks.getBlockAttributes( block, settings ) }
 							onChange={ () => {} } />
 					);
 				} ) }
