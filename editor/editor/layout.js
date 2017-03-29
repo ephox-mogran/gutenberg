@@ -17,8 +17,7 @@ class Layout extends wp.element.Component {
 	}
 
 	switchMode( newMode ) {
-		// TODO: we need a serializer from blocks here
-		const html = this.state.html;
+		const html = this.mode === 'text' ? this.state.html : wp.blocks.serialize( this.state.blocks );
 		const blocks = this.mode === 'visual' ? this.state.blocks : wp.blocks.parse( this.state.html );
 		this.setState( {
 			mode: newMode,

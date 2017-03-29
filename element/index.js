@@ -29,3 +29,15 @@ export { render };
  * A base class to create WordPress Components (Refs, state and lifecycle hooks)
  */
 export { Component };
+
+/**
+ * Renders a given element into a string
+ *
+ * @param {wp.Element} element Element to render
+ * @return {String}            HTML
+ */
+export function renderToString( element ) {
+	const div = document.createElement( 'div' );
+	render( element, div );
+	return div.innerHTML;
+}
