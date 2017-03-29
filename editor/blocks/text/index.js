@@ -12,6 +12,7 @@ wp.blocks.registerBlock( 'core/text', {
 	edit( attributes, onChange ) {
 		return (
 			<Editable
+				name="p"
 				value={ attributes.value }
 				onChange={ ( value ) => onChange( { value } ) }
 			/>
