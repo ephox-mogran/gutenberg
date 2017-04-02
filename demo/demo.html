@@ -19,9 +19,9 @@
     const setupBlock = (slug, attributes) => {
       let row = document.querySelector('tr.' + slug);
       let settings = wp.blocks.getBlockSettings('core/' + slug);
-      let comp = settings.edit(attributes, () => { });
+      let comp = settings.edit({ attributes: attributes, onChange: () => { } });
       ReactDOM.render(comp, row.querySelector('.editor'));
-      let saved = settings.save(attributes);
+      let saved = settings.save({attributes: attributes});
       ReactDOM.render(saved, row.querySelector('.saved'));
     };
 
@@ -34,7 +34,7 @@
         debugger;
       }});
       setupBlock('text', { value: 'This is text' })
-      setupBlock('heading', { nodeName: 'h2', value: 'This is a heading' });
+      // setupBlock('heading', { nodeName: 'h2', value: 'This is a heading' });
       setupBlock('list', {
         nodeName: 'ol',
         items: [
